@@ -1,0 +1,7 @@
+version: "0.2"
+ignorePaths: [devcontainer.json, .pre-commit-config.yaml]
+dictionaryDefinitions: []
+dictionaries: []
+words: []
+ignoreWords: []
+import: []
