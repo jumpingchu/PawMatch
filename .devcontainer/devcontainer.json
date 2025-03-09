@@ -1,0 +1,26 @@
+{
+	"name": "Template",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"eamodio.gitlens",
+				"mhutchie.git-graph",
+				"yzhang.markdown-all-in-one",
+				"charliermarsh.ruff",
+				"PKief.material-icon-theme",
+				"yzhang.markdown-all-in-one",
+				"ms-azuretools.vscode-docker",
+				"njpwerner.autodocstring",
+				"ms-python.mypy-type-checker",
+				"Gruntfuggly.todo-tree",
+                "GitHub.copilot"
+			]
+		}
+	},
+	"postCreateCommand": "sudo uv pip install --system -r requirements.txt && pre-commit install"
+}

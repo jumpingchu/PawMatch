@@ -1,0 +1,42 @@
+repos:
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+    - id: check-yaml
+    - id: check-json
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: detect-private-key
+    - id: check-added-large-files
+    - id: check-merge-conflict
+    - id: requirements-txt-fixer
+    - id: no-commit-to-branch
+      args: [-b, release, -b, main, -b, master]
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.9.1
+  hooks:
+    - id: ruff
+      name: Ruff Linter
+      args: [ --fix, --select, I]
+    - id: ruff-format
+      name: Check code format
+
+- repo: https://github.com/pycqa/bandit
+  rev: 1.8.0
+  hooks:
+    - id: bandit
+      name: Check Python security issues
+
+- repo: https://github.com/crate-ci/typos
+  rev: dictgen-v0.3.1
+  hooks:
+    - id: typos
+      name: Check typos
+
+- repo: https://github.com/gitleaks/gitleaks
+  rev: v8.22.1
+  hooks:
+    - id: gitleaks
+      name: Check Secrets in Git Committed Files
