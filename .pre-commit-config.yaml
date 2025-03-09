@@ -24,7 +24,7 @@ repos:
       name: Check code format
 
 - repo: https://github.com/crate-ci/typos
-  rev: v1
+  rev: v1.30.1
   hooks:
     - id: typos
       name: Check typos
