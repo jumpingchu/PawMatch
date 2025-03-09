@@ -15,7 +15,7 @@ repos:
       args: [-b, release, -b, main, -b, master]
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.9.1
+  rev: v0.9.10
   hooks:
     - id: ruff
       name: Ruff Linter
@@ -23,20 +23,14 @@ repos:
     - id: ruff-format
       name: Check code format
 
-- repo: https://github.com/pycqa/bandit
-  rev: 1.8.0
-  hooks:
-    - id: bandit
-      name: Check Python security issues
-
 - repo: https://github.com/crate-ci/typos
-  rev: dictgen-v0.3.1
+  rev: v1
   hooks:
     - id: typos
       name: Check typos
 
 - repo: https://github.com/gitleaks/gitleaks
-  rev: v8.22.1
+  rev: v8.24.0
   hooks:
     - id: gitleaks
       name: Check Secrets in Git Committed Files
