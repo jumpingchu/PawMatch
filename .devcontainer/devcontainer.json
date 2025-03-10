@@ -16,7 +16,8 @@
 				"ms-azuretools.vscode-docker",
 				"njpwerner.autodocstring",
 				"Gruntfuggly.todo-tree",
-                "GitHub.copilot"
+                "GitHub.copilot",
+				"hashicorp.terraform"
 			]
 		}
 	},
