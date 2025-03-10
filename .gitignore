@@ -1,5 +1,9 @@
 .DS_Store
 *.tfvars
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
