@@ -2,8 +2,12 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 5.0"
+      version = "6.25.0"
     }
+  }
+  backend "gcs" {
+    bucket = "tfstate-paw-match"
+    prefix = "dev"
   }
 }
 
