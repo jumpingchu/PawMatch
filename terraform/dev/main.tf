@@ -11,7 +11,7 @@ import {
 resource "google_bigquery_dataset" "paw_match" {
   dataset_id  = var.dataset_id
   project     = var.project_id
-  location    = "asia-east1"
+  location    = var.location
   description = "Dataset for pet adoption data"
   lifecycle {
     prevent_destroy = true

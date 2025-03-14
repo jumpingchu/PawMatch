@@ -3,6 +3,10 @@ variable "project_id" {
   type        = string
 }
 
+variable "location" {
+  description = "The location of GCP services"
+  type        = string
+}
 variable "dataset_id" {
   description = "The dataset ID of BigQuery"
   type        = string
