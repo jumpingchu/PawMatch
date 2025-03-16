@@ -22,12 +22,13 @@ resource "google_bigquery_table" "adoption_opendata" {
   dataset_id = google_bigquery_dataset.paw_match.dataset_id
   table_id   = var.adoption_opendata_table
   project    = var.project_id
+  deletion_protection = false
 
   schema = jsonencode([
     { name = "animal_id", type = "STRING" },
     { name = "animal_subid", type = "STRING" },
-    { name = "animal_area_pkid", type = "INTEGER" },
-    { name = "animal_shelter_pkid", type = "INTEGER" },
+    { name = "animal_area_pkid", type = "STRING" },
+    { name = "animal_shelter_pkid", type = "STRING" },
     { name = "animal_place", type = "STRING" },
     { name = "animal_kind", type = "STRING" },
     { name = "animal_Variety", type = "STRING" },
@@ -42,14 +43,14 @@ resource "google_bigquery_table" "adoption_opendata" {
     { name = "animal_status", type = "STRING" },
     { name = "animal_remark", type = "STRING" },
     { name = "animal_caption", type = "STRING" },
-    { name = "animal_opendate", type = "TIMESTAMP" },
-    { name = "animal_closeddate", type = "TIMESTAMP" },
-    { name = "animal_update", type = "TIMESTAMP" },
-    { name = "animal_createtime", type = "TIMESTAMP" },
+    { name = "animal_opendate", type = "DATETIME" },
+    { name = "animal_closeddate", type = "STRING" },
+    { name = "animal_update", type = "STRING" },
+    { name = "animal_createtime", type = "STRING" },
     { name = "shelter_name", type = "STRING" },
     { name = "album_file", type = "STRING" },
-    { name = "album_update", type = "TIMESTAMP" },
-    { name = "cDate", type = "TIMESTAMP" },
+    { name = "album_update", type = "STRING" },
+    { name = "cDate", type = "STRING" },
     { name = "shelter_address", type = "STRING" },
     { name = "shelter_tel", type = "STRING" }
   ])
@@ -57,9 +58,5 @@ resource "google_bigquery_table" "adoption_opendata" {
   time_partitioning {
     type = "DAY"
     field = "animal_opendate"
-  }
-
-  lifecycle {
-    prevent_destroy = true
   }
 }
