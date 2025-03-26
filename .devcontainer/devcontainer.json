@@ -1,5 +1,5 @@
 {
-	"name": "Template",
+	"name": "Paw-Match",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
@@ -17,9 +17,10 @@
 				"njpwerner.autodocstring",
 				"Gruntfuggly.todo-tree",
                 "GitHub.copilot",
-				"hashicorp.terraform"
+				"hashicorp.terraform",
+				"tamasfe.even-better-toml"
 			]
 		}
 	},
-	"postCreateCommand": "sudo uv pip install --system -r requirements.txt && pre-commit install"
+	"postCreateCommand": "uv sync"
 }
