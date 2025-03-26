@@ -6,8 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "dotenv>=0.9.9",
+    "google-cloud-storage>=3.1.0",
     "pandas>=2.2.3",
-    "pandas-gbq>=0.28.0",
     "pre-commit>=4.2.0",
     "pydantic>=2.10.6",
     "streamlit>=1.44.0",

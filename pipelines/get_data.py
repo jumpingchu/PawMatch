@@ -1,10 +1,29 @@
+import io
 import os
 
-import pandas as pd
-import pandas_gbq
+import pyarrow as pa
+import pyarrow.parquet as pq
 import requests
 from dotenv import load_dotenv
+from google.cloud import storage
 from models import ApiUrls
+
+
+def data_to_gcs_parquet(data, bucket_name, blob_name):
+    # 將 Python 字典轉換為 PyArrow Table
+    table = pa.Table.from_pylist(data)
+
+    # 將 PyArrow Table 寫入 bytes buffer
+    buffer = io.BytesIO()
+    pq.write_table(table, buffer)
+    buffer.seek(0)
+
+    # 上傳 bytes buffer 到 GCS
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    blob.upload_from_file(buffer, content_type="application/octet-stream")
+    print(f"DataFrame 已儲存為 Parquet 檔案到 gs://{bucket_name}/{blob_name}")
 
 
 def get_data(url, params: dict):
@@ -21,26 +40,21 @@ def create_params(date_str: str):
     return params
 
 
-def upload_bq(df, dest_table_id, project_id):
-    pandas_gbq.to_gbq(df, dest_table_id, project_id)
-    return f"Data uploaded to {dest_table_id}"
-
-
 def flow_adoption_data():
     load_dotenv()
+
+    # request configs
     date_str = "2025-03-10"
     params = create_params(date_str)
     url = ApiUrls.PetAdoption.value
+
+    # get data
     data = get_data(url, params)
-    df = pd.DataFrame(data)
-    df = df.astype(str)
-    df["animal_opendate"] = df["animal_opendate"].apply(pd.to_datetime)
 
-    project_id = os.getenv("GCP_PROJECT_ID")
-    dataset_id = "paw_match"
-    table_id = "adoption_opendata"
-
-    upload_bq(df, f"{dataset_id}.{table_id}", project_id)
+    # GCS upload
+    bucket_name = os.getenv("GCS_BUCKET_NAME")
+    blob_name = f"raw/{date_str}.parquet"
+    data_to_gcs_parquet(data, bucket_name, blob_name)
 
 
 if __name__ == "__main__":
