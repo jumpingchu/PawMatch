@@ -1,5 +1,6 @@
 import io
 import os
+from datetime import datetime, timedelta
 
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -7,6 +8,7 @@ import requests
 from dotenv import load_dotenv
 from google.cloud import storage
 from models import ApiUrls
+from prefect import flow, task
 
 
 def data_to_gcs_parquet(data, bucket_name, blob_name):
@@ -31,20 +33,18 @@ def get_data(url, params: dict):
     return response.json()
 
 
-# https://data.moa.gov.tw/api/v1/AnimalRecognition?animal_opendate=2025-03-10&$top=10
-# https://data.moa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL&animal_opendate=2025-03-16
-
-
 def create_params(date_str: str):
     params = {"UnitId": "QcbUEzN6E6DL", "animal_opendate": date_str}
     return params
 
 
+@flow
 def flow_adoption_data():
     load_dotenv()
 
     # request configs
-    date_str = "2025-03-10"
+    date = datetime.now() - timedelta(days=1)
+    date_str = date.strftime("%Y-%m-%d")
     params = create_params(date_str)
     url = ApiUrls.PetAdoption.value
 
@@ -55,7 +55,3 @@ def flow_adoption_data():
     bucket_name = os.getenv("GCS_BUCKET_NAME")
     blob_name = f"raw/{date_str}.parquet"
     data_to_gcs_parquet(data, bucket_name, blob_name)
-
-
-if __name__ == "__main__":
-    flow_adoption_data()
